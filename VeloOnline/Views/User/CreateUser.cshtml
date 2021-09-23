@@ -1,0 +1,52 @@
+﻿@model VeloOnline.Models.ViewModels.RegistrationViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Create user</h1>
+<form asp-action="CreateUser" asp-controller="User" method="post" asp-antiforgery="true" asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        @if (Model.User != null)
+        {
+            <div>
+                @Html.LabelFor(x => x.User.UserName, null, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.User.UserName, null, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        }
+        else
+        {
+            <div>
+                @Html.LabelFor(x => x.User.UserName, null, new { @class = "form-label" })
+                @Html.TextBoxFor(x => x.User.UserName, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.User.UserName, null, new { @class = "text-danger m-2" })
+            </div>
+        }
+
+        <div>
+            @Html.LabelFor(x => x.User.Email, null, new { @class = "form-label" })
+            @Html.TextBoxFor(x => x.User.Email, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.User.Email, null, new { @class = "text-danger m-2" })
+        </div>
+
+
+        <div>
+            @Html.LabelFor(x => x.Password, null, new { @class = "form-label" })
+            @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger m-2" })
+        </div>
+        <div>
+            @Html.LabelFor(x => x.ConfirmPassword, null, new { @class = "form-label" })
+            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.ConfirmPassword, null, new { @class = "text-danger m-2" })
+        </div>
+
+            <input type="submit" value="Save" class="btn btn-outline-primary w-50 " />
+     </div>
+
+</form>
+
+
+

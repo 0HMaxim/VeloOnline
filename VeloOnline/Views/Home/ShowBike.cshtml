@@ -1,0 +1,25 @@
+﻿@model VeloOnline.Models.Bike
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mb-3 justify-content-center" style="box-shadow: 10px 5px 5px black;">
+    <div class="d-flex">
+        <div>
+            <img src="@Model.ImageUrl" width="400" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Title</h5>
+                <p class="card-text">@Model.Description</p>
+                <ul class="list-group list-group-flush">
+                       <li class="list-group-item">Manufacturer: @Model.Manufacturer</li>
+                       <li class="list-group-item">Number of speeds: @Model.NumberOfSpeeds</li>
+                       <li class="list-group-item">Wheel size: @Model.WheelSize</li>
+                       <li class="list-group-item">Weight: @Model.Weight</li>
+                       <li class="list-group-item">Price: @Model.Price</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

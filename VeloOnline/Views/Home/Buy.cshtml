@@ -1,0 +1,43 @@
+﻿@model VeloOnline.Models.Order
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<h1>Order</h1>
+
+<form class="row g-3" method="post">
+    <input type="hidden" value="@ViewBag.BikeId" name="BikeId" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-6">
+
+        @Html.LabelFor(x => x.Firstname, null, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.Firstname, null, new { @class = "form-control" })
+        @Html.ValidationMessage("Firstname", null, new { @class = "text-danger m-2" })
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.Lastname, null, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.Lastname, null, new { @class = "form-control" })
+        @Html.ValidationMessage("Lastname", null, new { @class = "text-danger m-2" })
+    </div>
+
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.Email, null, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.Email, null, new { @class = "form-control" })
+        @Html.ValidationMessage("Email", null, new { @class = "text-danger m-2" })
+    </div>
+
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.Phone, null, new { @class = "form-label" })
+        @Html.TextBoxFor(x => x.Phone, null, new { @class = "form-control" })
+        @Html.ValidationMessage("Phone", null, new { @class = "text-danger m-2" })
+    </div>
+
+
+    <div class="col-md-6">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+</form>
+

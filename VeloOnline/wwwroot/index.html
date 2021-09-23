@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bikes</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="accountForm" class="w-50 col-lg-6 offset-lg-3 mt-1">
+
+            <div>
+                <input type="text" id="login" placeholder="Login" class="form-control" />
+            </div>
+
+            <div>
+                <input type="password" id="password" placeholder="Password" class="form-control" />
+            </div>
+
+            <button id="submitForm" class="btn btn-warning form-control mt-2">Login</button>
+
+        </div>
+
+
+        <h1>Bikes</h1>
+
+        <div id="errors" class="alert alert-danger" style="display:none;"></div>
+
+        <form name="bikeForm">
+            <input type="hidden" name="bikeId" value="0" />
+            <div class="form-group">
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Manufacturer: </label>
+                <input type="text" name="manufacturer" id="manufacturer" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">ImageUrl: </label>
+                <input type="text" name="imageUrl" id="imageUrl" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <input type="text" name="description" id="description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="wheelSize">Wheel size: </label>
+                <input type="number" step="0.1" value="0" name="wheelSize" id="wheelSize" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="numberOfSpeeds">Number of speeds: </label>
+                <input type="number" name="numberOfSpeeds" value="0" id="numberOfSpeeds" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight: </label>
+                <input type="number" step="0.1" value="0" name="weight" id="weight" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="price">Price: </label>
+                <input type="number" name="price" value="0" id="price" class="form-control" />
+            </div>
+            <button type="submit" id="submit" class="btn btn-primary">Save</button>
+        </form>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Manufacturer</th>
+                    <th>ImageUrl</th>
+                    <th>Description</th>
+                    <th>Wheel size</th>
+                    <th>Number of speeds</th>
+                    <th>Weight</th>
+                    <th>Price</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

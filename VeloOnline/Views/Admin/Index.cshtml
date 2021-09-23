@@ -1,0 +1,65 @@
+﻿@model IEnumerable<VeloOnline.Models.Bike>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div>
+
+    <h1>Velo shop</h1>
+    <a href="~/Admin/Create" class="btn btn-primary">Create Bike</a>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Manufacturer</th>
+                <th>Wheel Size</th>
+                <th>Price</th>
+                <th>Number of speeds</th>
+                <th>Weight</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bike in Model)
+            {
+            <tr>
+                <th>@bike.Title</th>
+                <th>@bike.Manufacturer</th>
+                <th>@bike.WheelSize</th>
+                <th>@bike.Price</th>
+                <th>@bike.NumberOfSpeeds</th>
+                <th>@bike.Weight</th>
+
+
+                <td>
+                    <form action="~/Admin/Create/@bike.BikeId" method="get">
+                        @Html.Hidden("returnUrl", Context.Request.Path)
+                        <input type="hidden" value="@bike.BikeId" name="bikeId" />
+                        <input type="submit" value="Edit" class="btn btn-warning" />
+                    </form>
+                </td>
+
+                <td>
+                    <form action="~/Admin/Delete" method="post">
+                        @Html.Hidden("returnUrl", Context.Request.Path)
+                        <input type="hidden" value="@bike.BikeId" name="bikeId" />
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </form>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.countPage; i++)
+            {
+                <li class="page-item"><a class="page-link" href="~/Admin/Index/@i">@i</a></li>
+            }
+        </ul>
+    </nav>
+
+
+
+</div>

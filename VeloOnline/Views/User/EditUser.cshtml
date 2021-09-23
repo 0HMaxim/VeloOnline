@@ -1,0 +1,26 @@
+﻿@model VeloOnline.Models.ViewModels.EditUserViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Edit data for @Model.User.UserName</h2>
+
+<form asp-action="EditUser" asp-controller="User" method="post" asp-antiforgery="true" asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            @Html.LabelFor(x => x.User.UserName, null, new { @class = "form-label" })
+            @Html.TextBoxFor(x => x.User.UserName, null, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+
+        <div>
+            @Html.LabelFor(x => x.User.Email, null, new { @class = "form-label" })
+            @Html.TextBoxFor(x => x.User.Email, null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.User.Email, null, new { @class = "text-danger m-2" })
+        </div>
+
+        <input type="submit" value="Save" class="btn btn-outline-primary w-50 " />
+    </div>
+
+</form>

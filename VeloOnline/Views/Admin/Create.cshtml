@@ -1,0 +1,78 @@
+﻿@model VeloOnline.Models.ViewModels.EditBikeViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    }
+
+
+<form method="post" class="container">
+    @Html.HiddenFor(x => x.Bike.BikeId)
+    @Html.HiddenFor(x => x.ReturnUrl)
+
+    <div class="card mb-3 justify-content-center" style="box-shadow: 10px 5px 5px black;">
+        <div class="d-flex">
+            <div>
+                @if (@Model.Bike != null && @Model.Bike.ImageUrl != null)
+                {
+                    <img src="@Model.Bike.ImageUrl" width="400" alt="...">
+                }
+               
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @Html.LabelFor(x => x.Bike.Title, null, new { @class = "form-label" })
+                        @Html.TextBoxFor(x => x.Bike.Title, new { @class = "form-control" })
+                        @Html.ValidationMessage("Bike.Title", null, new { @class = "text-danger m-2" })
+                    </h5>
+                    <p class="card-text">
+                        @Html.LabelFor(x => x.Bike.Description, null, new { @class = "form-label" })
+                        @Html.TextAreaFor(x => x.Bike.Description, new { @class = "form-control" })
+                        @Html.ValidationMessage("Bike.Description", null, new { @class = "text-danger m-2" })
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.Manufacturer, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.Manufacturer, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.Manufacturer", null, new { @class = "text-danger m-2" })
+                        </li>
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.NumberOfSpeeds, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.NumberOfSpeeds, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.NumberOfSpeeds", null, new { @class = "text-danger m-2" })
+                        </li>
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.WheelSize, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.WheelSize, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.WheelSize", null, new { @class = "text-danger m-2" })
+                        </li>
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.Weight, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.Weight, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.Weight", null, new { @class = "text-danger m-2" })
+                        </li>
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.Price, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.Price, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.Price", null, new { @class = "text-danger m-2" })
+                        </li>
+
+                        <li class="list-group-item">
+                            @Html.LabelFor(x => x.Bike.ImageUrl, null, new { @class = "form-label" })
+                            @Html.TextBoxFor(x => x.Bike.ImageUrl, new { @class = "form-control" })
+                            @Html.ValidationMessage("Bike.ImageUrl", null, new { @class = "text-danger m-2" })
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary col-12">Save</button>
+</form>

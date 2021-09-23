@@ -1,0 +1,95 @@
+﻿@model VeloOnline.Models.ViewModels.CartIndexViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cart</h1>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Title</th>
+            <th>Manufacturer</th>
+            <th>Wheel Size</th>
+            <th>Price</th>
+            <th>Number of speeds</th>
+            <th>Weight</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Cart.Lines)
+        {
+        <tr>
+            <th>@line.Quantity</th>
+            <th>@line.Bike.Title</th>
+            <th>@line.Bike.Manufacturer</th>
+            <th>@line.Bike.WheelSize</th>
+            <th>@line.Bike.Price</th>
+            <th>@line.Bike.NumberOfSpeeds</th>
+            <th>@line.Bike.Weight</th>
+
+
+
+           <th>
+               <div class="d-flex">
+                   @using (Html.BeginForm("DeleteItemFromCart", "Cart"))
+                   {
+                       <input type="hidden" value="@line.Bike.BikeId" name="bikeId" />
+                       @Html.Hidden("returnUrl", Context.Request.Path)
+                       <input type="submit" value="-" class="btn btn-secondary m-0" />
+                   }
+
+                   @using (Html.BeginForm("AddToCart", "Cart"))
+                   {
+                       <input type="hidden" value="@line.Bike.BikeId" name="BikeId" />
+                       @Html.Hidden("returnUrl", Context.Request.Path)
+                       <input type="submit" value="+" class="btn btn-secondary m-0" />
+                   }
+               </div>
+            </th>
+
+
+
+            <th>
+
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                {
+                    <input type="hidden" value="@line.Bike.BikeId" name="bikeId" />
+                    @Html.Hidden("returnUrl", Context.Request.Path)
+                    <button type="submit" class="btn-close btn-close-white" style="width:30px; height:30px" aria-label="Close"></button>
+                }
+
+            </th>
+
+        </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td>Total: </td>
+            <td>@Model.Cart.ComputeTotalValue()</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+
+<div class="d-flex justify-content-between">
+    <a href="@Model.ReturnUrl" class="btn btn-primary">Continue shopping</a>
+
+
+    @using (Html.BeginForm("RemoveAllLines", "Cart"))
+    {
+        @Html.Hidden("returnUrl", Context.Request.Path)
+        <button type="submit" class="btn btn-outline-danger">Delete all</button>
+    }
+
+
+</div>

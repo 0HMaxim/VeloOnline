@@ -1,0 +1,189 @@
+﻿@model VeloOnline.Models.ViewModels.BikeListViewModel
+
+<div class="d-flex justify-content-around w-100">
+
+    <div class="float-left rounded p-2 mr-2" id="filter" style="background-color:cadetblue">
+        <div>
+            <h6>Model</h6>
+            <div class="flex-wrap">
+                @foreach (var manufacturer in Model.Manufacturer)
+                {
+                    <div class="ml-4">
+                        <input class="form-check-input " type="checkbox" name="SelectedManufacturer" value="@manufacturer"
+                               @(Model.SelectedManufacturer.Contains(manufacturer) ? "checked=\"checked\"" : "") />@manufacturer
+                        </div>
+                    }
+            </div>
+        </div>
+
+        <div>
+            <h6>Wheel Size</h6>
+            <div class="d-flex">
+                <input class="form-control" type="number" value="@Model.MinWheelSize" step="0.1" name="minWheelSize" placeholder="MIN" />
+                <input class="form-control" type="number" value="@Model.MaxWheelSize" step="0.1" name="maxWheelSize" placeholder="MAX" />
+            </div>
+        </div>
+
+        <div>
+            <h6>Number of speeds</h6>
+            <div class="d-flex">
+                <input class="form-control" type="number" value="@Model.MinNumberOfSpeeds" name="minNumberOfSpeeds" placeholder="MIN" />
+                <input class="form-control" type="number" value="@Model.MaxNumberOfSpeeds" name="maxNumberOfSpeeds" placeholder="MAX" />
+            </div>
+        </div>
+
+        <div>
+            <h6>Weight</h6>
+            <div class="d-flex">
+
+                <input class="form-control" type="number" value="@Model.MinWeight" step="0.1" name="minWeight" placeholder="MIN" />
+                <input class="form-control" type="number" value="@Model.MaxWeight" step="0.1" name="maxWeight" placeholder="MAX" />
+            </div>
+        </div>
+
+        <div>
+            <h6>Price</h6>
+            <div class="d-flex">
+                <input class="form-control" type="number" value="@Model.MinPrice" step="0.1" name="minPrice" placeholder="MIN" />
+                <input class="form-control" type="number" value="@Model.MaxPrice" step="0.1" name="maxPrice" placeholder="MAX" />
+            </div>
+        </div>
+
+        <button id="selectFilter" class="btn btn-success form-control">Filter</button>
+
+
+    </div>
+
+    <div class="d-flex flex-wrap">
+
+        @foreach (var bike in Model.Bikes)
+        {
+            <div class="card mr-4 mt-4 rounded" style="width: 18rem; box-shadow: 10px 5px 5px black;">
+                <img src="@bike.ImageUrl" class="card-img-top" alt="...">
+                <div class="card-body bg-white">
+                    <a asp-controller="Home" asp-action="ShowBike" asp-route-bikeId="@bike.BikeId" asp-route-returnUrl="@Context.Request.Path" class="card-link h5">@bike.Title</a>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Wheel size @bike.WheelSize</li>
+                    <li class="list-group-item">Price @bike.Price</li>
+                </ul>
+                <div class="card-body">
+                    <a href="~/Home/Buy/@bike.BikeId" class="btn btn-secondary">Buy</a>
+                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-bikeId="@bike.BikeId" asp-route-returnUrl="@Context.Request.Path" asp-route-page="@ViewBag.id" class="btn btn-secondary" asp->Add to cart</a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+<div class="mt-4 d-flex justify-content-center">
+
+
+
+    <div class="btn btn-primary" id="previous">Previous</div>
+
+    <input type="hidden" value="@ViewBag.id" id="id" />
+    <input type="hidden" value="@ViewBag.countPage" id="countPage" />
+
+    @for (int i = 1; i <= ViewBag.countPage; i++)
+    {
+        @if (i == @ViewBag.id)
+        {
+            <div class="btn btn-warning paggination">@i</div>
+        }
+        else
+        {
+            <div class="btn btn-primary paggination">@i</div>
+        }
+
+    }
+
+    <div class="btn btn-primary" id="next">Next</div>
+
+</div>
+
+
+<script>
+
+    var countPage = parseInt($('#countPage').val());
+
+
+    $('#previous').on('click', function () {
+        var numberPage = parseInt($('#id').val());
+        if (numberPage - 1 >= 1)
+            filter(numberPage - 1)
+    });
+
+    $('#next').on('click', function () {
+        var numberPage = parseInt($('#id').val());
+        if (numberPage + 1 <= countPage)
+            filter(numberPage + 1)
+    });
+
+
+    $('#selectFilter').on('click', function () {
+        filter();
+    })
+
+    $('.paggination').on('click', function () {
+        var page = $(this).text();
+        filter(page)
+    })
+
+    $('.sort').on('click', function () {
+        var typeSort = $(this).text();
+        console.log(typeSort);
+        filter(null, typeSort)
+    })
+
+    function filter(page, typeSort = "Title") {
+        var manufacturer = []
+        var minWheelSize = $('input[name="minWheelSize"]').val();
+        var maxWheelSize = $('input[name="maxWheelSize"]').val();
+
+        var minNumberOfSpeeds = $('input[name="minNumberOfSpeeds"]').val();
+        var maxNumberOfSpeeds = $('input[name="maxNumberOfSpeeds"]').val();
+
+        var minWeight = $('input[name="minWeight"]').val();
+        var maxWeight = $('input[name="maxWeight"]').val();
+
+        var minPrice = $('input[name="minPrice"]').val();
+        var maxPrice = $('input[name="maxPrice"]').val();
+
+
+
+        $.each($("input[name='SelectedManufacturer']:checked"), function () {
+            manufacturer.push($(this).val().toString().split(' ').join('_'));
+        });
+
+        numberPage = page;
+        console.log("numberPage " + numberPage);
+        console.log("countPage " + countPage);
+
+        typeSort = typeSort.toString().split(' ').join('_');
+
+        
+            $('#bike-list')
+                .load(`/Home/BikeList/?SelectedManufacturer=${manufacturer}&minWheelSize=${minWheelSize}&maxWheelSize=${maxWheelSize}&minNumberOfSpeeds=${minNumberOfSpeeds}&maxNumberOfSpeeds=${maxNumberOfSpeeds}&minWeight=${minWeight}&maxWeight=${maxWeight}&minPrice=${minPrice}&maxPrice=${maxPrice}&id=${page}`)
+        @*else
+            $('#bike-list')
+                .load(`/Home/BikeList/?selectedWheelSize=${wheelSize}&id=${page}&selectedManufacturer=${manufacturer}&&selectedNumberOfSpeeds=${numberOfSpeeds}&selectedWeight=${weight}&selectedPrice=${price}&sortType=${typeSort}`)*@
+    }
+
+
+
+
+</script>
+
+<style>
+    html, body {
+        background-image: url('https://funart.pro/uploads/posts/2020-04/1587043083_36-p-foni-dlya-internet-magazinov-84.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: 'Numans', sans-serif;
+    }
+</style>
