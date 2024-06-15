@@ -1,5 +1,8 @@
 C# ASP NET .NET + jQuery
 
+
+An online bicycle store where you can
+
 User Features:
 Add to Cart: Ability to add bicycles to the cart.
 Filter Products: Ability to filter products.
